@@ -7,6 +7,7 @@ public class AsteroidsGameController
     public Camera Camera;
 
     private IGameObjectSpawner _spawner;
+    private float _forceIntensity = 100f;
 
     public void Start()
     {
@@ -17,7 +18,11 @@ public class AsteroidsGameController
 
     private void StartStage()
     {
-        // instantiate asteroids around the screen
+        InstantiateAsteroidsAroundTheScreen();
+    }
+
+    private void InstantiateAsteroidsAroundTheScreen()
+    {
         float z = Camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)
             ? new Vector3(Random.Range(0f, 1f), Random.Range(0, 2), z)
@@ -25,6 +30,7 @@ public class AsteroidsGameController
 
         var position = Camera.ViewportToWorldPoint(randomPosition);
 
-        _spawner.Spawn(AsteroidPrefab, position, Quaternion.identity);
+        var asteriod = _spawner.Spawn(AsteroidPrefab, position, Quaternion.identity);
+        asteriod.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * _forceIntensity);
     }
 }
