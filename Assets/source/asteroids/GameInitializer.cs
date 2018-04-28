@@ -18,6 +18,14 @@ public class GameInitializer : MonoBehaviour
             AsteroidPrefab = AsteroidPrefab
         };
 
-        _gameController.Start();
+        var stage = new Stage()
+        {
+            StartingLivesAmount = 3,
+            StartingAsteroidsAmount = 5,
+            StagePointFor1stSaucerToAppear = 0.5f,
+            StagePointFor2stSaucerToAppear = 0.8f
+        };
+
+        _gameController.Start(stage);
 	}
 }

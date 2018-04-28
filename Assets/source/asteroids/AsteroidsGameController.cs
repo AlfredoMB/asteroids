@@ -1,5 +1,7 @@
-﻿using AlfredoMB.DI;
+﻿using System;
+using AlfredoMB.DI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AsteroidsGameController
 {
@@ -9,20 +11,28 @@ public class AsteroidsGameController
     private ICamera _camera;
     private float _forceIntensity = 500f;
 
-    public void Start()
+    public void Start(Stage stage)
     {
         _spawner = SimpleDI.Get<IGameObjectSpawner>();
         _camera = SimpleDI.Get<ICamera>();
 
-        StartStage();
+        StartStage(stage);
     }
 
-    private void StartStage()
+    private void StartStage(Stage stage)
     {
-        InstantiateAsteroidsAroundTheScreen();
+        InstantiateAsteroidsAroundTheScreen(stage);
     }
 
-    private void InstantiateAsteroidsAroundTheScreen()
+    private void InstantiateAsteroidsAroundTheScreen(Stage stage)
+    {
+        for(int i=0; i<stage.StartingAsteroidsAmount; i++)
+        {
+            InstantiateAsteroidAroundTheScreen();
+        }
+    }
+
+    private void InstantiateAsteroidAroundTheScreen()
     {
         float z = _camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)

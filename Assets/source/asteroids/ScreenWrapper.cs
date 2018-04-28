@@ -17,7 +17,7 @@ public class ScreenWrapper : MonoBehaviour
         var currentPosition = transform.position;
         var viewportPosition = _camera.WorldToViewportPoint(currentPosition);
 
-        Debug.Log(currentPosition.ToString() + " = " + viewportPosition.ToString());
+        //Debug.Log(currentPosition.ToString() + " = " + viewportPosition.ToString());
 
         bool isExitingLeft = viewportPosition.x < 0 && Rigidbody.velocity.x < 0;
         bool isExitingRight = viewportPosition.x > 1 && Rigidbody.velocity.x > 0;
@@ -39,7 +39,7 @@ public class ScreenWrapper : MonoBehaviour
             currentPosition.Set(currentPosition.x, currentPosition.y, -currentPosition.z);
         }
 
-        Debug.Log("setting to: " + currentPosition.ToString());
+        //Debug.Log("setting to: " + currentPosition.ToString());
 
         Rigidbody.MovePosition(currentPosition);
     }
