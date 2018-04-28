@@ -11,11 +11,11 @@ public class GameInitializer : MonoBehaviour
     {
         // startup systems
         SimpleDI.Register<IGameObjectSpawner>(new GameObjectSpawner());
+        SimpleDI.Register<ICamera>(new UnityCamera());
 
         _gameController = new AsteroidsGameController()
         {
-            AsteroidPrefab = AsteroidPrefab,
-            Camera = Camera.main
+            AsteroidPrefab = AsteroidPrefab
         };
 
         _gameController.Start();
