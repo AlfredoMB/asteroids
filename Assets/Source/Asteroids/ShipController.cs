@@ -10,8 +10,8 @@ public class ShipController : MonoBehaviour
     private ICommandController _commandController;
 
     private bool _areThrustersOn;
-    private const float _thrusterStrength = 10f;
-    private const float _sideThrusterStrength = 1f;
+    private const float _thrusterStrength = 5f;
+    private const float _sideThrusterStrength = 0.25f;
     private bool _areLeftThrustersOn;
     private bool _areRightThrustersOn;
 

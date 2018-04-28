@@ -23,7 +23,7 @@ public class AsteroidsGameController
     {
         InstantiateShip();
 
-        //InstantiateAsteroidsAroundTheScreen(stage);
+        InstantiateAsteroidsAroundTheScreen(stage);
     }
 
     private void InstantiateShip()
