@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AsteroidPrefab: {fileID: 1277943948132276, guid: 16b1b8d8479605e45972d73eb1cfe1ac,
     type: 2}
+  ShipPrefab: {fileID: 1950452985488954, guid: abded0a33bc2c384fbb07cbb68035fff, type: 2}
 --- !u!4 &1434343897
 Transform:
   m_ObjectHideFlags: 0

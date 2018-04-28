@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 public class AsteroidsGameController
 {
     public GameObject AsteroidPrefab;
+    public GameObject ShipPrefab;
 
     private IGameObjectSpawner _spawner;
     private ICamera _camera;
@@ -21,7 +22,14 @@ public class AsteroidsGameController
 
     private void StartStage(Stage stage)
     {
+        InstantiateShip();
+
         InstantiateAsteroidsAroundTheScreen(stage);
+    }
+
+    private void InstantiateShip()
+    {
+        _spawner.Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
     }
 
     private void InstantiateAsteroidsAroundTheScreen(Stage stage)

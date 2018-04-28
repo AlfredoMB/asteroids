@@ -4,6 +4,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     public GameObject AsteroidPrefab;
+    public GameObject ShipPrefab;
 
     private AsteroidsGameController _gameController;
 
@@ -15,7 +16,8 @@ public class GameInitializer : MonoBehaviour
 
         _gameController = new AsteroidsGameController()
         {
-            AsteroidPrefab = AsteroidPrefab
+            AsteroidPrefab = AsteroidPrefab,
+            ShipPrefab = ShipPrefab
         };
 
         var stage = new Stage()
