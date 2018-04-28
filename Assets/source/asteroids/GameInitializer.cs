@@ -1,10 +1,12 @@
-﻿using AlfredoMB.DI;
+﻿using AlfredoMB.Command;
+using AlfredoMB.DI;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
     public GameObject AsteroidPrefab;
     public GameObject ShipPrefab;
+    public GameObject Input;
 
     private AsteroidsGameController _gameController;
 
@@ -13,6 +15,9 @@ public class GameInitializer : MonoBehaviour
         // startup systems
         SimpleDI.Register<IGameObjectSpawner>(new GameObjectSpawner());
         SimpleDI.Register<ICamera>(new UnityCamera());
+        SimpleDI.Register<ICommandController>(new CommandController());
+
+        GameObject.Instantiate(Input);
 
         _gameController = new AsteroidsGameController()
         {
