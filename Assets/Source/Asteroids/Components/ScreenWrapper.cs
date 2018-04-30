@@ -1,4 +1,4 @@
-﻿using AlfredoMB.DI;
+﻿using AlfredoMB.ServiceLocator;
 using UnityEngine;
 
 public class ScreenWrapper : MonoBehaviour
@@ -9,7 +9,7 @@ public class ScreenWrapper : MonoBehaviour
 
     private void Start()
     {
-        _camera = SimpleDI.Get<ICamera>();
+        _camera = ServiceLocator.Get<ICamera>();
     }
 
     private void FixedUpdate()

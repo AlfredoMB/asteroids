@@ -1,108 +1,98 @@
 ﻿using System;
 using AlfredoMB.Command;
-using AlfredoMB.DI;
+using AlfredoMB.ServiceLocator;
 using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
     public Rigidbody Rigidbody;
 
+    public MainThrusterController _mainThruster;
+    public SideThrusterController _leftThruster;
+    public SideThrusterController _rightThruster;
+
+    public GunController _gun;
+
     private ICommandController _commandController;
 
-    private bool _areThrustersOn;
-    private const float _thrusterStrength = 5f;
-    private const float _sideThrusterStrength = 0.25f;
-    private bool _areLeftThrustersOn;
-    private bool _areRightThrustersOn;
+    private ShipModel _shipModel;
 
-    private void Start()
+    private void OnEnable()
     {
         // add listeners to commands
-        _commandController = SimpleDI.Get<ICommandController>();
-        _commandController.AddListener<StartThrusters>(OnStartThrusters);
-        _commandController.AddListener<StopThrusters>(OnStopThrusters);
+        _commandController = ServiceLocator.Get<ICommandController>();
+        _commandController.AddListener<StartThrustersCommand>(OnStartMainThrustersCommand);
+        _commandController.AddListener<StopThrustersCommand>(OnStopMainThrustersCommand);
 
-        _commandController.AddListener<StartLeftThrusters>(OnStartLeftThrusters);
-        _commandController.AddListener<StopLeftThrusters>(OnStopLeftThrusters);
+        _commandController.AddListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
+        _commandController.AddListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
 
-        _commandController.AddListener<StartRightThrusters>(OnStartRightThrusters);
-        _commandController.AddListener<StopRightThrusters>(OnStopRightThrusters);
+        _commandController.AddListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
+        _commandController.AddListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
+
+        _commandController.AddListener<FireCommand>(OnFireCommand);
     }
 
-    private void OnDestroy()
+    public void Initialize(ShipModel shipModel)
+    {
+        _shipModel = shipModel;
+        _mainThruster.Initialize(shipModel, Rigidbody);
+        _leftThruster.Initialize(shipModel, Rigidbody);
+        _rightThruster.Initialize(shipModel, Rigidbody);
+        _gun.Initialize(shipModel);
+    }
+
+    private void OnDisable()
     {
         if (_commandController == null)
         {
             return;
         }
 
-        _commandController.RemoveListener<StartThrusters>(OnStartThrusters);
-        _commandController.RemoveListener<StopThrusters>(OnStopThrusters);
+        _commandController.RemoveListener<StartThrustersCommand>(OnStartMainThrustersCommand);
+        _commandController.RemoveListener<StopThrustersCommand>(OnStopMainThrustersCommand);
 
-        _commandController.RemoveListener<StartLeftThrusters>(OnStartLeftThrusters);
-        _commandController.RemoveListener<StopLeftThrusters>(OnStopLeftThrusters);
+        _commandController.RemoveListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
+        _commandController.RemoveListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
 
-        _commandController.RemoveListener<StartRightThrusters>(OnStartRightThrusters);
-        _commandController.RemoveListener<StopRightThrusters>(OnStopRightThrusters);
+        _commandController.RemoveListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
+        _commandController.RemoveListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
+
+        _commandController.RemoveListener<FireCommand>(OnFireCommand);
     }
 
-    private void OnStartThrusters(ICommand obj)
+    private void OnStartMainThrustersCommand(ICommand obj)
     {
-        Debug.Log("Thrusters ON!");
-        _areThrustersOn = true;
+        _mainThruster.StartThruster();
     }
 
-    private void OnStopThrusters(ICommand obj)
+    private void OnStopMainThrustersCommand(ICommand obj)
     {
-        Debug.Log("Thrusters off.");
-        _areThrustersOn = false;
+        _mainThruster.StopThruster();
     }
 
-    private void OnStartLeftThrusters(ICommand obj)
+    private void OnStartLeftThrustersCommand(ICommand obj)
     {
-        Debug.Log("Left Thrusters ON!");
-        _areLeftThrustersOn = true;
+        _leftThruster.StartThruster();
     }
 
-    private void OnStopLeftThrusters(ICommand obj)
+    private void OnStopLeftThrustersCommand(ICommand obj)
     {
-        Debug.Log("Left Thrusters off.");
-        _areLeftThrustersOn = false;
+        _leftThruster.StopThruster();
     }
 
-    private void OnStartRightThrusters(ICommand obj)
+    private void OnStartRightThrustersCommand(ICommand obj)
     {
-        Debug.Log("Right Thrusters ON!");
-        _areRightThrustersOn = true;
+        _rightThruster.StartThruster();
     }
 
-    private void OnStopRightThrusters(ICommand obj)
+    private void OnStopRightThrustersCommand(ICommand obj)
     {
-        Debug.Log("Right Thrusters off.");
-        _areRightThrustersOn = false;
+        _rightThruster.StopThruster();
     }
 
-    private void FixedUpdate()
+    private void OnFireCommand(ICommand obj)
     {
-        if (_areThrustersOn)
-        {
-            Rigidbody.AddForce(transform.forward * _thrusterStrength);
-        }
-
-
-        if (_areLeftThrustersOn)
-        {
-            var forcePoint = transform.position + transform.forward;
-            //var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            //sphere.transform.SetPositionAndRotation(forcePoint, Quaternion.identity);
-            Rigidbody.AddForceAtPosition(transform.right * _sideThrusterStrength, forcePoint);
-        }
-        if (_areRightThrustersOn)
-        {
-            var forcePoint = transform.position + transform.forward;
-            //var sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            //sphere.transform.SetPositionAndRotation(forcePoint, Quaternion.identity);
-            Rigidbody.AddForceAtPosition(-transform.right * _sideThrusterStrength, forcePoint);
-        }
+        _gun.Fire();
     }
 }

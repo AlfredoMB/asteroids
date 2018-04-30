@@ -2,13 +2,18 @@
 
 public class GameObjectSpawner : IGameObjectSpawner
 {
-    public GameObject Spawn(GameObject original, Vector3 position, Quaternion rotation)
+    public T Spawn<T>(T original, Vector3 position, Quaternion rotation) where T : Object
     {
-        return GameObject.Instantiate(original, position, rotation);
+        return Object.Instantiate(original, position, rotation);
+    }
+
+    public T Spawn<T>(T shot) where T : Object
+    {
+        return Spawn(shot, Vector3.zero, Quaternion.identity);
     }
 
     public void Despawn(GameObject instantiatedObject)
     {
-        GameObject.Destroy(instantiatedObject);
+        Object.Destroy(instantiatedObject);
     }
 }

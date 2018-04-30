@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AlfredoMB.DI
+namespace AlfredoMB.ServiceLocator
 {
-    /// <summary>
-    /// A simple take on Depencency Injection.
-    /// </summary>
-    public static class SimpleDI
+    public static class ServiceLocator
     {
         private static Dictionary<Type, object> _instances = new Dictionary<Type, object>();
 

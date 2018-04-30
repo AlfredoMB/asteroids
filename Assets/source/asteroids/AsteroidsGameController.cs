@@ -1,5 +1,4 @@
-﻿using System;
-using AlfredoMB.DI;
+﻿using AlfredoMB.ServiceLocator;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -8,30 +7,19 @@ public class AsteroidsGameController
     public GameObject AsteroidPrefab;
     public GameObject ShipPrefab;
 
-    private IGameObjectSpawner _spawner;
-    private ICamera _camera;
-
-    public void Start(Stage stage)
+    public void Start(StageModel stage)
     {
-        _spawner = SimpleDI.Get<IGameObjectSpawner>();
-        _camera = SimpleDI.Get<ICamera>();
-
-        StartStage(stage);
-    }
-
-    private void StartStage(Stage stage)
-    {
-        InstantiateShip();
-
+        InstantiateShip(stage.ShipModel);
         InstantiateAsteroidsAroundTheScreen(stage);
     }
 
-    private void InstantiateShip()
+    private void InstantiateShip(ShipModel shipModel)
     {
-        _spawner.Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
+        var ship = ServiceLocator.Get<IGameObjectSpawner>().Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
+        ship.GetComponent<ShipController>().Initialize(shipModel);
     }
 
-    private void InstantiateAsteroidsAroundTheScreen(Stage stage)
+    private void InstantiateAsteroidsAroundTheScreen(StageModel stage)
     {
         for(int i=0; i<stage.StartingAsteroidsAmount; i++)
         {
@@ -39,15 +27,18 @@ public class AsteroidsGameController
         }
     }
 
-    private void InstantiateAsteroidAroundTheScreen(Stage stage)
+    private void InstantiateAsteroidAroundTheScreen(StageModel stage)
     {
-        float z = _camera.transform.position.y;
+        var spawner = ServiceLocator.Get<IGameObjectSpawner>();
+        var camera = ServiceLocator.Get<ICamera>();
+
+        float z = camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)
             ? new Vector3(Random.Range(0f, 1f), Random.Range(0, 2), z)
             : new Vector3(Random.Range(0, 2), Random.Range(0f, 1f), z);
-        var position = _camera.ViewportToWorldPoint(randomPosition);
+        var position = camera.ViewportToWorldPoint(randomPosition);
 
-        var asteriod = _spawner.Spawn(AsteroidPrefab, position, Quaternion.identity);
+        var asteriod = spawner.Spawn(AsteroidPrefab, position, Quaternion.identity);
 
         // not sure if this should be here:
         asteriod.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * stage.AsteroidStartingForceIntensity);

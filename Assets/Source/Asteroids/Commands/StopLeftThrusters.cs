@@ -1,5 +1,5 @@
 ﻿using AlfredoMB.Command;
 
-public class StopLeftThrusters : ICommand
+public class StopLeftThrustersCommand : ICommand
 {
 }

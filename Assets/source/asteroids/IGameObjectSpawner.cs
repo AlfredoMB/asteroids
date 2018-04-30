@@ -2,6 +2,7 @@
 
 public interface IGameObjectSpawner
 {
+    T Spawn<T>(T original, Vector3 position, Quaternion rotation) where T : Object;
+    T Spawn<T>(T shot) where T : Object;
     void Despawn(GameObject instantiatedObject);
-    GameObject Spawn(GameObject original, Vector3 position, Quaternion rotation);
 }

@@ -1,9 +1,12 @@
 ﻿using AlfredoMB.Command;
-using AlfredoMB.DI;
+using AlfredoMB.ServiceLocator;
 using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
+    [SerializeField]
+    public StageModel StageModel;
+
     public GameObject AsteroidPrefab;
     public GameObject ShipPrefab;
     public GameObject Input;
@@ -13,26 +16,18 @@ public class GameInitializer : MonoBehaviour
 	private void Awake()
     {
         // startup systems
-        SimpleDI.Register<IGameObjectSpawner>(new GameObjectSpawner());
-        SimpleDI.Register<ICamera>(new UnityCamera());
-        SimpleDI.Register<ICommandController>(new CommandController());
+        ServiceLocator.Register<IGameObjectSpawner>(new GameObjectSpawner());
+        ServiceLocator.Register<ICamera>(new UnityCamera());
+        ServiceLocator.Register<ICommandController>(new CommandController());
 
         GameObject.Instantiate(Input);
 
         _gameController = new AsteroidsGameController()
         {
             AsteroidPrefab = AsteroidPrefab,
-            ShipPrefab = ShipPrefab
+            ShipPrefab = ShipPrefab // TODO: improve this to a more generic ship shell
         };
 
-        var stage = new Stage()
-        {
-            StartingLivesAmount = 3,
-            StartingAsteroidsAmount = 5,
-            StagePointFor1stSaucerToAppear = 0.5f,
-            StagePointFor2stSaucerToAppear = 0.8f
-        };
-
-        _gameController.Start(stage);
+        _gameController.Start(StageModel);
 	}
 }
