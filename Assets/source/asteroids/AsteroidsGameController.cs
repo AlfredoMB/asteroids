@@ -1,4 +1,6 @@
-﻿using AlfredoMB.ServiceLocator;
+﻿using System;
+using AlfredoMB.Command;
+using AlfredoMB.ServiceLocator;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -6,17 +8,35 @@ public class AsteroidsGameController
 {
     public AsteroidController AsteroidPrefab;
     public ShipController ShipPrefab;
+    public GameStateController GameStateController;
 
-    public void Start(StageModel stage)
+    private ShipController _playerShip;
+    private GameStateController _gameState;
+
+    public void Start(StageModel stage, GameStateController gameState)
     {
+        _gameState = gameState;
+        _gameState.Initialize(stage);
+
         InstantiateShip(stage.ShipModel);
         InstantiateAsteroidsAroundTheScreen(stage);
+        ServiceLocator.Get<ICommandController>().AddListener<DestroyCommand>(OnDestroyCommand);
+    }
+
+    private void OnDestroyCommand(ICommand obj)
+    {
+        var destroyCommand = obj as DestroyCommand;
+
+        if (destroyCommand.Destroyed == _playerShip.gameObject)
+        {
+            _gameState.UpdateLives(_gameState.GameState.CurrentLives.Value - 1);
+        }
     }
 
     private void InstantiateShip(ShipModel shipModel)
     {
-        var ship = ServiceLocator.Get<IGameObjectSpawner>().Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
-        ship.Initialize(shipModel);
+        _playerShip = ServiceLocator.Get<IGameObjectSpawner>().Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
+        _playerShip.Initialize(shipModel);
     }
 
     private void InstantiateAsteroidsAroundTheScreen(StageModel stage)

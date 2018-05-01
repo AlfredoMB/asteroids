@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Hittable : MonoBehaviour
 {
-    public event Action<object> OnHit;
+    public event Action<GameObject> OnHit;
 
-    public void Hit(object hitter)
+    public void Hit(GameObject hitter)
     {
         if (OnHit == null)
         {

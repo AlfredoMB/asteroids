@@ -41,9 +41,10 @@ namespace AlfredoMB.Command
 
             // TODO: for now we'll just re-router the command without any logic:
             var type = command.GetType();
-            if (_commandListeners.ContainsKey(type))
+            Action<ICommand> value;
+            if (_commandListeners.TryGetValue(type, out value) && value != null)
             {
-                _commandListeners[type](command);
+                value(command);
             }
         }
     }

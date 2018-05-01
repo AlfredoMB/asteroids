@@ -8,7 +8,12 @@ public class ShotController : MonoBehaviour
 
     private void Awake()
     {
-        Expirable.OnExpired += Destructable.Destroy;
+        Expirable.OnExpired += OnExpired;
+    }
+
+    private void OnExpired()
+    {
+        Destructable.ExecuteDestruction(gameObject);
     }
 
     private void OnEnable()
@@ -24,7 +29,7 @@ public class ShotController : MonoBehaviour
             return;
         }
 
-        hittable.Hit(this);
-        Destructable.Destroy();
+        hittable.Hit(gameObject);
+        Destructable.ExecuteDestruction();
     }
 }

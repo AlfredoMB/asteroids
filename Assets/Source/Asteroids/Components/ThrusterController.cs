@@ -15,13 +15,11 @@ public abstract class ThrusterController : MonoBehaviour
 
     public void StartThruster()
     {
-        Debug.Log(name + " started!");
         _isTurnedOn = true;
     }
 
     public void StopThruster()
     {
-        Debug.Log(name + " stopped!");
         _isTurnedOn = false;
     }
 }

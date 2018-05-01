@@ -10,6 +10,7 @@ public class GameInitializer : MonoBehaviour
     public AsteroidController AsteroidPrefab;
     public ShipController ShipPrefab;
     public ShipInput Input;
+    public UIController UIController;
     
     private AsteroidsGameController _gameController;
 
@@ -20,14 +21,19 @@ public class GameInitializer : MonoBehaviour
         ServiceLocator.Register<ICamera>(new UnityCamera());
         ServiceLocator.Register<ICommandController>(new CommandController());
 
-        GameObject.Instantiate(Input);
+        Instantiate(Input);
+
+        var gameState = new GameStateController();
+
+        var ui = Instantiate(UIController);
+        ui.Initialize(gameState);
 
         _gameController = new AsteroidsGameController()
         {
             AsteroidPrefab = AsteroidPrefab,
             ShipPrefab = ShipPrefab // TODO: improve this to a more generic ship shell
         };
-
-        _gameController.Start(StageModel);
+        
+        _gameController.Start(StageModel, gameState);
 	}
 }

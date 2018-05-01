@@ -6,6 +6,7 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     public Rigidbody Rigidbody;
+    public Destructable Destructable;
 
     public MainThrusterController _mainThruster;
     public SideThrusterController _leftThruster;
@@ -13,24 +14,27 @@ public class ShipController : MonoBehaviour
 
     public GunController _gun;
 
-    private ICommandController _commandController;
-
     private void OnEnable()
     {
         // add listeners to commands
-        _commandController = ServiceLocator.Get<ICommandController>();
-        _commandController.AddListener<StartThrustersCommand>(OnStartMainThrustersCommand);
-        _commandController.AddListener<StopThrustersCommand>(OnStopMainThrustersCommand);
+        var commandController = ServiceLocator.Get<ICommandController>();
+        commandController.AddListener<StartThrustersCommand>(OnStartMainThrustersCommand);
+        commandController.AddListener<StopThrustersCommand>(OnStopMainThrustersCommand);
 
-        _commandController.AddListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
-        _commandController.AddListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
+        commandController.AddListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
+        commandController.AddListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
 
-        _commandController.AddListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
-        _commandController.AddListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
+        commandController.AddListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
+        commandController.AddListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
 
-        _commandController.AddListener<FireCommand>(OnFireCommand);
+        commandController.AddListener<FireCommand>(OnFireCommand);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destructable.ExecuteDestruction(collision.gameObject);
+    }
+    
     public void Initialize(ShipModel shipModel)
     {
         _mainThruster.Initialize(shipModel, Rigidbody);
@@ -41,21 +45,18 @@ public class ShipController : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_commandController == null)
-        {
-            return;
-        }
+        Debug.Log("OnDisable");
+        var commandController = ServiceLocator.Get<ICommandController>();
+        commandController.RemoveListener<StartThrustersCommand>(OnStartMainThrustersCommand);
+        commandController.RemoveListener<StopThrustersCommand>(OnStopMainThrustersCommand);
 
-        _commandController.RemoveListener<StartThrustersCommand>(OnStartMainThrustersCommand);
-        _commandController.RemoveListener<StopThrustersCommand>(OnStopMainThrustersCommand);
+        commandController.RemoveListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
+        commandController.RemoveListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
 
-        _commandController.RemoveListener<StartLeftThrustersCommand>(OnStartLeftThrustersCommand);
-        _commandController.RemoveListener<StopLeftThrustersCommand>(OnStopLeftThrustersCommand);
+        commandController.RemoveListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
+        commandController.RemoveListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
 
-        _commandController.RemoveListener<StartRightThrustersCommand>(OnStartRightThrustersCommand);
-        _commandController.RemoveListener<StopRightThrustersCommand>(OnStopRightThrustersCommand);
-
-        _commandController.RemoveListener<FireCommand>(OnFireCommand);
+        commandController.RemoveListener<FireCommand>(OnFireCommand);
     }
 
     private void OnStartMainThrustersCommand(ICommand obj)

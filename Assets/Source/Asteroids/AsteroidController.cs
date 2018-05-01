@@ -21,7 +21,7 @@ public class AsteroidController : MonoBehaviour
         Rigidbody.AddForce(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * asteroidStartingForceIntensity);
     }
 
-    public void OnHit(object hitter)
+    public void OnHit(GameObject hitter)
     {
         if (FragmentAsteroid != null)
         {
@@ -34,6 +34,6 @@ public class AsteroidController : MonoBehaviour
             fragment.Initialize(_asteroidStartingForceIntensity);
         }
 
-        Destructable.Destroy();
+        Destructable.ExecuteDestruction(hitter);
     }
 }
