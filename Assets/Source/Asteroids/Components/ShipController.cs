@@ -15,8 +15,6 @@ public class ShipController : MonoBehaviour
 
     private ICommandController _commandController;
 
-    private ShipModel _shipModel;
-
     private void OnEnable()
     {
         // add listeners to commands
@@ -35,7 +33,6 @@ public class ShipController : MonoBehaviour
 
     public void Initialize(ShipModel shipModel)
     {
-        _shipModel = shipModel;
         _mainThruster.Initialize(shipModel, Rigidbody);
         _leftThruster.Initialize(shipModel, Rigidbody);
         _rightThruster.Initialize(shipModel, Rigidbody);

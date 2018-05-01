@@ -22,6 +22,6 @@ public class GunController : MonoBehaviour
 
         _gunCooldownFinishTime = Time.time + (1 / _shipModel.FireRate);
 
-        var shot = ServiceLocator.Get<IGameObjectSpawner>().Spawn(Shot, transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+        ServiceLocator.Get<IGameObjectSpawner>().Spawn(Shot, transform.position, Quaternion.LookRotation(transform.forward, transform.up));
     }
 }

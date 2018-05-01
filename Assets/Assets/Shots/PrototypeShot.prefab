@@ -39,6 +39,9 @@ GameObject:
   - component: {fileID: 4500322573466802}
   - component: {fileID: 54435066772673010}
   - component: {fileID: 114140457510198252}
+  - component: {fileID: 114363661596687630}
+  - component: {fileID: 114429891917735000}
+  - component: {fileID: 114493815049108566}
   m_Layer: 0
   m_Name: PrototypeShot
   m_TagString: Untagged
@@ -141,6 +144,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 54435066772673010}
+  Destructable: {fileID: 114363661596687630}
+  Expirable: {fileID: 114493815049108566}
+--- !u!114 &114363661596687630
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639937222422276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47b2f1b31416e140a0c915cded72a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114429891917735000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639937222422276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c9f638950dd8ff48aa3d745de2204df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 54435066772673010}
+--- !u!114 &114493815049108566
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639937222422276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906a5e62d3b3f7e4394213903c0a6647, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LifeTime: 5
 --- !u!135 &135759158621906690
 SphereCollider:
   m_ObjectHideFlags: 1

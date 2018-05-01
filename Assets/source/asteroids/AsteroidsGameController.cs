@@ -4,8 +4,8 @@ using Random = UnityEngine.Random;
 
 public class AsteroidsGameController
 {
-    public GameObject AsteroidPrefab;
-    public GameObject ShipPrefab;
+    public AsteroidController AsteroidPrefab;
+    public ShipController ShipPrefab;
 
     public void Start(StageModel stage)
     {
@@ -16,7 +16,7 @@ public class AsteroidsGameController
     private void InstantiateShip(ShipModel shipModel)
     {
         var ship = ServiceLocator.Get<IGameObjectSpawner>().Spawn(ShipPrefab, Vector3.zero, Quaternion.identity);
-        ship.GetComponent<ShipController>().Initialize(shipModel);
+        ship.Initialize(shipModel);
     }
 
     private void InstantiateAsteroidsAroundTheScreen(StageModel stage)
@@ -39,8 +39,6 @@ public class AsteroidsGameController
         var position = camera.ViewportToWorldPoint(randomPosition);
 
         var asteriod = spawner.Spawn(AsteroidPrefab, position, Quaternion.identity);
-
-        // not sure if this should be here:
-        asteriod.GetComponent<Rigidbody>().AddForce(new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * stage.AsteroidStartingForceIntensity);
+        asteriod.Initialize(stage.AsteroidStartingForceIntensity);
     }
 }

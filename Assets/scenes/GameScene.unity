@@ -286,10 +286,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2ddef2bca251504da39ca961c18a8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AsteroidPrefab: {fileID: 1277943948132276, guid: 16b1b8d8479605e45972d73eb1cfe1ac,
+  StageModel: {fileID: 11400000, guid: 1e9a45e1f16019a4fba98426faddedde, type: 2}
+  AsteroidPrefab: {fileID: 114138382829994670, guid: 16b1b8d8479605e45972d73eb1cfe1ac,
     type: 2}
-  ShipPrefab: {fileID: 1950452985488954, guid: abded0a33bc2c384fbb07cbb68035fff, type: 2}
-  Input: {fileID: 1045485666910638, guid: d352e7030a83f164ba5c2ecc661e2e0c, type: 2}
+  ShipPrefab: {fileID: 114214999039458250, guid: abded0a33bc2c384fbb07cbb68035fff,
+    type: 2}
+  Input: {fileID: 114927057422081454, guid: d352e7030a83f164ba5c2ecc661e2e0c, type: 2}
 --- !u!4 &1434343897
 Transform:
   m_ObjectHideFlags: 0

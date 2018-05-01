@@ -11,5 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6471ea9a2f58374d8fee6c378dc714a, type: 3}
   m_Name: ShipModel
   m_EditorClassIdentifier: 
-  MainThrusterStrength: 0.5
-  SideThrusterStrength: 0.2
+  MainThrusterStrength: 10
+  SideThrusterStrength: 2
+  FireRate: 5

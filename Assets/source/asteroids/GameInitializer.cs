@@ -7,10 +7,10 @@ public class GameInitializer : MonoBehaviour
     [SerializeField]
     public StageModel StageModel;
 
-    public GameObject AsteroidPrefab;
-    public GameObject ShipPrefab;
-    public GameObject Input;
-
+    public AsteroidController AsteroidPrefab;
+    public ShipController ShipPrefab;
+    public ShipInput Input;
+    
     private AsteroidsGameController _gameController;
 
 	private void Awake()

@@ -16,4 +16,4 @@ MonoBehaviour:
   StagePointFor1stSaucerToAppear: 0.5
   StagePointFor2stSaucerToAppear: 0.8
   AsteroidStartingForceIntensity: 50000
-  ShipModel: {fileID: 0}
+  ShipModel: {fileID: 11400000, guid: 8b3e5a4e3c2eea44cab0995147ca86e3, type: 2}
