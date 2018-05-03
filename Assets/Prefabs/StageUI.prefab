@@ -34,8 +34,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224614924752002678}
-  - component: {fileID: 114696574864794556}
   - component: {fileID: 114203426259256404}
+  - component: {fileID: 114115925383146350}
   m_Layer: 5
   m_Name: Lifes
   m_TagString: Untagged
@@ -99,6 +99,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114115925383146350
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1353553598062380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 32, y: 32}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!114 &114203426259256404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,30 +226,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb4dfc45c9aef3e479306917f183e4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LivesView: {fileID: 0}
-  ScoreView: {fileID: 0}
---- !u!114 &114696574864794556
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1353553598062380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -405508275, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
+  StageStateModel: {fileID: 0}
+  LivesView: {fileID: 114203426259256404}
+  ScoreView: {fileID: 114798292122422002}
 --- !u!114 &114798292122422002
 MonoBehaviour:
   m_ObjectHideFlags: 1

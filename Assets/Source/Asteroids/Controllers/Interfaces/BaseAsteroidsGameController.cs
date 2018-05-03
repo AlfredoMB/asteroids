@@ -1,10 +1,26 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public abstract class BaseAsteroidsGameController : MonoBehaviour
 {
-    public abstract GameObject CreateAsteroidAroundTheScreen(float asteroidStartingForceIntensity);
-    public abstract List<GameObject> CreateAsteroidsAroundTheScreen(int amount, float asteroidStartingForceIntensity);
+    public Action OnLevelFinished;
+    public Action OnShipDestroyed;
+    public Action OnGameOver;
+
+    public ShipController PlayerShip { get; protected set; }
+
+    public abstract void Initialize();
+    public abstract void StartLevel();
+
     public abstract ShipController CreateShip(ShipModel shipModel);
+    public abstract void DestroyShip();
+    public abstract void RespawnShip();
+
+    public abstract void CreateInitialAsteroids();
+    public abstract void DestroyAsteroid(AsteroidController asteroid);
+
+    public abstract SaucerController CreateSaucer(SaucerModel saucer);
+    public abstract void DestroySaucer(SaucerController saucer);
+
     public abstract void Reset();
 }

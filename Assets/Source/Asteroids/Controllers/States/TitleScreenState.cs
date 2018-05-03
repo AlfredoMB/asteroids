@@ -14,7 +14,7 @@ public class TitleScreenState : MonoBehaviour
     private void OnEnable()
     {
         AsteroidsGameController.Reset();
-        AsteroidsGameController.CreateAsteroidsAroundTheScreen(StartingAsteroidsAmount, AsteroidStartingForceIntensity);
+        AsteroidsGameController.CreateInitialAsteroids();
         Input.OnStartStage += OnStartStage;
     }
 

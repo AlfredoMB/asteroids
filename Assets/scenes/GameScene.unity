@@ -561,7 +561,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1868233672}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &795429153
 GameObject:
@@ -777,7 +777,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2127824960}
   - {fileID: 1619656835}
   - {fileID: 1510640769}
   m_Father: {fileID: 1827928913}
@@ -794,9 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fcd801c7416564ca82bca4640d2ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShipModel: {fileID: 11400000, guid: 8b3e5a4e3c2eea44cab0995147ca86e3, type: 2}
-  StageModel: {fileID: 11400000, guid: 1e9a45e1f16019a4fba98426faddedde, type: 2}
-  StageStateModel: {fileID: 2127824959}
+  RespawnDelay: 1
   ShipInput: {fileID: 1619656836}
   AsteroidsGameController: {fileID: 1868233671}
   GameOverState: {fileID: 49054010}
@@ -894,7 +891,7 @@ Prefab:
     - target: {fileID: 224194775008935298, guid: b61fdd0096de8af4696e7f09097b1566,
         type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224194775008935298, guid: b61fdd0096de8af4696e7f09097b1566,
         type: 2}
@@ -966,7 +963,8 @@ Prefab:
       propertyPath: Spawner
       value: 
       objectReference: {fileID: 1958194818}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114696574864794556, guid: b61fdd0096de8af4696e7f09097b1566, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: b61fdd0096de8af4696e7f09097b1566, type: 2}
   m_IsPrefabParent: 0
 --- !u!224 &1510640769 stripped
@@ -1013,7 +1011,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1455163925}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1619656836
 MonoBehaviour:
@@ -1143,6 +1141,9 @@ MonoBehaviour:
   AssetLibrary: {fileID: 442801262}
   Camera: {fileID: 1189423624}
   Spawner: {fileID: 1958194818}
+  StageModel: {fileID: 11400000, guid: 1e9a45e1f16019a4fba98426faddedde, type: 2}
+  ShipModel: {fileID: 11400000, guid: 8b3e5a4e3c2eea44cab0995147ca86e3, type: 2}
+  StageStateModel: {fileID: 2127824959}
 --- !u!4 &1868233672
 Transform:
   m_ObjectHideFlags: 0
@@ -1153,6 +1154,7 @@ Transform:
   m_LocalPosition: {x: 307.86227, y: 147.10112, z: 12.626203}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 2127824960}
   - {fileID: 442801263}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1197,6 +1199,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2031639850 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1353553598062380, guid: b61fdd0096de8af4696e7f09097b1566,
+    type: 2}
+  m_PrefabInternal: {fileID: 1510640768}
+--- !u!114 &2031639852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2031639850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2095666955, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 32, y: 32}
+  m_Spacing: {x: 0, y: 0}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &2127824958
 GameObject:
   m_ObjectHideFlags: 0
@@ -1230,10 +1260,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2127824958}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1455163925}
+  m_Father: {fileID: 1868233672}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Destructable : MonoBehaviour
 {
-    public event Action<GameObject> OnDestruction;
+    public event Action<GameObject, GameObject> OnDestruction;
 
     private BaseGameObjectSpawner _spawner;
 
@@ -14,10 +14,10 @@ public class Destructable : MonoBehaviour
 
     public void ExecuteDestruction(GameObject destroyer = null)
     {
-        _spawner.Despawn(gameObject);
         if (OnDestruction != null)
         {
-            OnDestruction(destroyer);
+            OnDestruction(gameObject, destroyer);
         }
+        _spawner.Despawn(gameObject);
     }
 }
