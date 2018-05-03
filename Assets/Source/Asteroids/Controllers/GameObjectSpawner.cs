@@ -28,10 +28,14 @@ public class GameObjectSpawner : BaseGameObjectSpawner
         Destroy(instantiatedObject);
     }
 
-    public override void Reset()
+    public override void Reset(List<GameObject> exceptionList = null)
     {
         foreach(var spawnedObject in _spawnedObjects)
         {
+            if (exceptionList != null && exceptionList.Contains(spawnedObject))
+            {
+                continue;
+            }
             Destroy(spawnedObject);
         }
         _spawnedObjects.Clear();

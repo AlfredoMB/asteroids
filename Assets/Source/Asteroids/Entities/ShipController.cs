@@ -4,7 +4,6 @@ using UnityEngine;
 public class ShipController : MonoBehaviour
 {
     public Rigidbody Rigidbody;
-    //public Destructable Destructable;
     public ScreenWrapper ScreenWrapper;
 
     public MainThrusterController _mainThruster;
@@ -22,43 +21,55 @@ public class ShipController : MonoBehaviour
         _leftThruster.Initialize(shipModel, Rigidbody);
         _rightThruster.Initialize(shipModel, Rigidbody);
         _gun.Initialize(shipModel, spawner, camera);
-
-        //Destructable.Initialize(spawner);
+        
         ScreenWrapper.Initialize(camera);
+    }
+
+    private void OnEnable()
+    {
+        if(_shipInput == null)
+        {
+            return;
+        }
+
+        SetInput(_shipInput);
     }
 
     public void SetInput(BaseShipInput shipInput)
     {
         _shipInput = shipInput;
-        shipInput.OnStartMainThrusters += StartMainThrusters;
-        shipInput.OnStopMainThrusters += StopMainThrusters;
+        shipInput.OnStartMainThrusters += _mainThruster.StartThruster;
+        shipInput.OnStopMainThrusters += _mainThruster.StopThruster;
 
-        shipInput.OnStartLeftThrusters += StartLeftThrusters;
-        shipInput.OnStopLeftThrusters += StopLeftThrusters;
+        shipInput.OnStartLeftThrusters += _leftThruster.StartThruster;
+        shipInput.OnStopLeftThrusters += _leftThruster.StopThruster;
 
-        shipInput.OnStartRightThrusters += StartRightThrusters;
-        shipInput.OnStopRightThrusters += StopRightThrusters;
+        shipInput.OnStartRightThrusters += _rightThruster.StartThruster;
+        shipInput.OnStopRightThrusters += _rightThruster.StopThruster;
 
-        shipInput.OnFire += Fire;
+        shipInput.OnFire += _gun.Fire;
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
+        _mainThruster.StopThruster();
+        _leftThruster.StopThruster();
+        _rightThruster.StopThruster();
+
         if (_shipInput == null)
         {
             return;
         }
+        _shipInput.OnStartMainThrusters -= _mainThruster.StartThruster;
+        _shipInput.OnStopMainThrusters -= _mainThruster.StopThruster;
 
-        _shipInput.OnStartMainThrusters -= StartMainThrusters;
-        _shipInput.OnStopMainThrusters -= StopMainThrusters;
+        _shipInput.OnStartLeftThrusters -= _leftThruster.StartThruster;
+        _shipInput.OnStopLeftThrusters -= _leftThruster.StopThruster;
 
-        _shipInput.OnStartLeftThrusters -= StartLeftThrusters;
-        _shipInput.OnStopLeftThrusters -= StopLeftThrusters;
+        _shipInput.OnStartRightThrusters -= _rightThruster.StartThruster;
+        _shipInput.OnStopRightThrusters -= _rightThruster.StopThruster;
 
-        _shipInput.OnStartRightThrusters -= StartRightThrusters;
-        _shipInput.OnStopRightThrusters -= StopRightThrusters;
-
-        _shipInput.OnFire += Fire;
+        _shipInput.OnFire -= _gun.Fire;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -68,49 +79,12 @@ public class ShipController : MonoBehaviour
             return;
         }
 
-        //Destructable.OnDestruction += OnShipDestruction;
-        //Destructable.ExecuteDestruction(collision.gameObject);
         if (OnShipDestruction != null)
         {
             OnShipDestruction(gameObject, collision.gameObject);
         }
     }
-
-    public void StartMainThrusters()
-    {
-        _mainThruster.StartThruster();
-    }
-
-    public void StopMainThrusters()
-    {
-        _mainThruster.StopThruster();
-    }
-
-    public void StartLeftThrusters()
-    {
-        _leftThruster.StartThruster();
-    }
-
-    public void StopLeftThrusters()
-    {
-        _leftThruster.StopThruster();
-    }
-
-    public void StartRightThrusters()
-    {
-        _rightThruster.StartThruster();
-    }
-
-    public void StopRightThrusters()
-    {
-        _rightThruster.StopThruster();
-    }
-
-    public void Fire()
-    {
-        _gun.Fire();
-    }
-
+    
     public void Hide()
     {
         gameObject.SetActive(false);

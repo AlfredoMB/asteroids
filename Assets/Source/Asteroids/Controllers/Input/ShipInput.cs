@@ -62,7 +62,7 @@ public class ShipInput : BaseShipInput
 
         if (Input.GetButton(FireButton))
         {
-            OnFire();
+            SafeAction(OnFire);
         }
     }
 }

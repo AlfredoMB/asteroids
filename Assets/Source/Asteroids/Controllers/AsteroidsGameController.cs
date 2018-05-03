@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -23,12 +24,13 @@ public class AsteroidsGameController : BaseAsteroidsGameController
     public override void Initialize()
     {
         StageStateModel.Initialize(StageModel);
+        CreateShip(ShipModel);
     }
 
     public override void StartLevel()
     {
         Reset();
-        CreateShip(ShipModel);
+        PlayerShip.Respawn(Vector3.zero);
         CreateInitialAsteroids();
     }
 
@@ -37,7 +39,7 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         _initialAsteroids.Clear();
         _currentAsteroids.Clear();
         _currentSaucers.Clear();
-        Spawner.Reset();
+        Spawner.Reset(PlayerShip != null ? new List<GameObject>() { PlayerShip.gameObject } : null);
     }
 
     public override ShipController CreateShip(ShipModel shipModel)
@@ -51,7 +53,6 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     private void OnShipDestruction(GameObject destroyed, GameObject destroyer)
     {
-        Debug.Log("destroyed by: " + destroyer.name, destroyer);
         DestroyShip();
     }
 
@@ -93,11 +94,11 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         _initialAsteroids.Clear();
         for (int i=0; i < _initialAsteroidsAmount; i++)
         {
-            _initialAsteroids.Add(CreateAsteroidAroundTheScreen());
+            _initialAsteroids.Add(CreateAsteroidAroundTheScreen(AssetLibrary.AssetSet.AsteroidPrefab));
         }
     }
 
-    private AsteroidController CreateAsteroidAroundTheScreen()
+    private AsteroidController CreateAsteroidAroundTheScreen(AsteroidController asteroid)
     {
         float z = Camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)
@@ -105,7 +106,7 @@ public class AsteroidsGameController : BaseAsteroidsGameController
             : new Vector3(Random.Range(0, 2), Random.Range(0f, 1f), z);
         var position = Camera.ViewportToWorldPoint(randomPosition);
 
-        return CreateAsteroid(position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
+        return CreateAsteroid(asteroid, position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
     }
 
     private Vector3 GetRandomForce(float intensity)
@@ -113,13 +114,14 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         return new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * intensity;
     }
 
-    private AsteroidController CreateAsteroid(Vector3 position, Quaternion rotation, Vector3 asteroidStartingForce)
+    private AsteroidController CreateAsteroid(AsteroidController asteroid, Vector3 position, Quaternion rotation, Vector3 asteroidStartingForce)
     {
-        var asteroidObject = Spawner.Spawn(AssetLibrary.AssetSet.AsteroidPrefab.gameObject, position, Random.rotation);
-        var asteroid = asteroidObject.GetComponent<AsteroidController>();
-        asteroid.Initialize(asteroidStartingForce, Spawner, Camera);
-        asteroid.OnDestruction += OnAsteroidDestruction;
-        return asteroid;
+        var asteroidObject = Spawner.Spawn(asteroid.gameObject, position, Random.rotation);
+        var asteroidController = asteroidObject.GetComponent<AsteroidController>();
+        asteroidController.Initialize(asteroidStartingForce, Spawner, Camera);
+        asteroidController.OnDestruction += OnAsteroidDestruction;
+        _currentAsteroids.Add(asteroidController);
+        return asteroidController;
     }
 
     private void OnAsteroidDestruction(GameObject destroyed, GameObject destroyer)
@@ -137,8 +139,8 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
         if (asteroid.FragmentAsteroid != null)
         {
-            CreateAsteroid(asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
-            CreateAsteroid(asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
+            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
+            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
         }
         else
         {
