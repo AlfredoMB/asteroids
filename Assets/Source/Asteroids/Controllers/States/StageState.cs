@@ -19,7 +19,13 @@ public class StageState : MonoBehaviour
         StageStateModel.Initialize(StageModel);
 
         AsteroidsGameController.Reset();
-        AsteroidsGameController.CreateAsteroidsAroundTheScreen(StageModel.StartingAsteroidsAmount, StageModel.AsteroidStartingForceIntensity);
+        var asteroids = 
+            AsteroidsGameController.CreateAsteroidsAroundTheScreen(StageModel.StartingAsteroidsAmount, StageModel.AsteroidStartingForceIntensity);
+
+        foreach(var asteroid in asteroids)
+        {
+            asteroid.GetComponent<AsteroidController>().OnDestruction += OnAsteroidDestruction;
+        }
 
         CreateShip();
         AttachShip();
@@ -67,7 +73,7 @@ public class StageState : MonoBehaviour
         ShipInput.OnFire -= _playerShip.Fire;
     }
 
-    private void OnShipDestruction()
+    private void OnShipDestruction(GameObject destroyer)
     {
         DeattachShip();
 
@@ -84,8 +90,8 @@ public class StageState : MonoBehaviour
         }
     }
 
-    private void OnAsteroidDestruction()
+    private void OnAsteroidDestruction(GameObject destroyer)
     {
-        StageStateModel.Lives.Value += 100;
+        StageStateModel.Score.Value += 100;
     }
 }

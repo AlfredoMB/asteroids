@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class AsteroidsGameController : BaseAsteroidsGameController
@@ -15,15 +16,18 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         return playerShip;
     }
 
-    public override void CreateAsteroidsAroundTheScreen(int amount, float asteroidStartingForceIntensity)
+    public override List<GameObject> CreateAsteroidsAroundTheScreen(int amount, float asteroidStartingForceIntensity)
     {
+        var asteroids = new List<GameObject>();
         for (int i=0; i<amount; i++)
         {
-            CreateAsteroidAroundTheScreen(asteroidStartingForceIntensity);
+            var asteroid = CreateAsteroidAroundTheScreen(asteroidStartingForceIntensity);
+            asteroids.Add(asteroid);
         }
+        return asteroids;
     }
 
-    public override void CreateAsteroidAroundTheScreen(float asteroidStartingForceIntensity)
+    public override GameObject CreateAsteroidAroundTheScreen(float asteroidStartingForceIntensity)
     {
         float z = Camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)
@@ -31,8 +35,9 @@ public class AsteroidsGameController : BaseAsteroidsGameController
             : new Vector3(Random.Range(0, 2), Random.Range(0f, 1f), z);
         var position = Camera.ViewportToWorldPoint(randomPosition);
 
-        var asteriod = Spawner.Spawn(AssetLibrary.AssetSet.AsteroidPrefab.gameObject, position, Random.rotation);
-        asteriod.GetComponent<AsteroidController>().Initialize(asteroidStartingForceIntensity, Spawner, Camera);
+        var asteroid = Spawner.Spawn(AssetLibrary.AssetSet.AsteroidPrefab.gameObject, position, Random.rotation);
+        asteroid.GetComponent<AsteroidController>().Initialize(asteroidStartingForceIntensity, Spawner, Camera);
+        return asteroid;
     }
 
     public override void Reset()

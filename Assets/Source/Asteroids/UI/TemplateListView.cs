@@ -22,7 +22,7 @@ public class TemplateListView : MonoBehaviour
                 _list.Add(spawned);
             }
         }
-        else
+        else if (_list.Count > 0)
         {
             for (int i = _list.Count - 1; value < _list.Count; i--)
             {

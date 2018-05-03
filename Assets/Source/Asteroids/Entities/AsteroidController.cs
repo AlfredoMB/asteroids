@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class AsteroidController : MonoBehaviour
 {
@@ -8,6 +10,8 @@ public class AsteroidController : MonoBehaviour
     public ScreenWrapper ScreenWrapper;
 
     public AsteroidController FragmentAsteroid;
+
+    public Action<GameObject> OnDestruction;
 
     private float _asteroidStartingForceIntensity;
     private BaseGameObjectSpawner _spawner;
@@ -36,7 +40,8 @@ public class AsteroidController : MonoBehaviour
             fragment = _spawner.Spawn(FragmentAsteroid.gameObject, transform.position, transform.rotation);
             fragment.GetComponent<AsteroidController>().Initialize(_asteroidStartingForceIntensity, _spawner, _camera);
         }
-
+        
+        Destructable.OnDestruction += OnDestruction;
         Destructable.ExecuteDestruction(hitter);
     }
 }

@@ -12,7 +12,7 @@ public class ShipController : MonoBehaviour
     public SideThrusterController _rightThruster;
     public GunController _gun;
 
-    public event Action OnShipDestruction;
+    public event Action<GameObject> OnShipDestruction;
 
     public void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner, BaseCamera camera)
     {
@@ -27,10 +27,7 @@ public class ShipController : MonoBehaviour
 
     public void OnCollisionEnter(Collision collision)
     {
-        if (OnShipDestruction != null)
-        {
-            OnShipDestruction();
-        }
+        Destructable.OnDestruction += OnShipDestruction;
         Destructable.ExecuteDestruction(collision.gameObject);
     }
 
