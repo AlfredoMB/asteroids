@@ -1,12 +1,23 @@
-﻿using AlfredoMB.Command;
-using AlfredoMB.ServiceLocator;
+﻿using System;
 using UnityEngine;
 
 public class Destructable : MonoBehaviour
 {
+    public event Action<GameObject> OnDestroyed;
+
+    private BaseGameObjectSpawner _spawner;
+
+    public void Initialize(BaseGameObjectSpawner spawner)
+    {
+        _spawner = spawner;
+    }
+
     public void ExecuteDestruction(GameObject destroyer = null)
     {
-        ServiceLocator.Get<IGameObjectSpawner>().Despawn(gameObject);
-        ServiceLocator.Get<ICommandController>().AddCommand(new DestroyCommand(gameObject, destroyer));
+        _spawner.Despawn(gameObject);
+        if (OnDestroyed != null)
+        {
+            OnDestroyed(destroyer);
+        }
     }
 }

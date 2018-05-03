@@ -146,6 +146,7 @@ MonoBehaviour:
   Rigidbody: {fileID: 54435066772673010}
   Destructable: {fileID: 114363661596687630}
   Expirable: {fileID: 114493815049108566}
+  ScreenWrapper: {fileID: 114429891917735000}
 --- !u!114 &114363661596687630
 MonoBehaviour:
   m_ObjectHideFlags: 1

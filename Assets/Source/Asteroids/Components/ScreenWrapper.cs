@@ -1,15 +1,14 @@
-﻿using AlfredoMB.ServiceLocator;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ScreenWrapper : MonoBehaviour
 {
     public Rigidbody Rigidbody;
 
-    private ICamera _camera;
+    private BaseCamera _camera;
 
-    private void Start()
+    public void Initialize(BaseCamera camera)
     {
-        _camera = ServiceLocator.Get<ICamera>();
+        _camera = camera;
     }
 
     private void FixedUpdate()

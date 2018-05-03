@@ -23,8 +23,8 @@ GameObject:
   - component: {fileID: 65848693018992834}
   - component: {fileID: 23399256512724444}
   - component: {fileID: 54193506554979634}
-  - component: {fileID: 114273616818318112}
   - component: {fileID: 114138382829994670}
+  - component: {fileID: 114273616818318112}
   - component: {fileID: 114114287249869736}
   - component: {fileID: 114655719370980484}
   m_Layer: 0
@@ -140,6 +140,7 @@ MonoBehaviour:
   Rigidbody: {fileID: 54193506554979634}
   Hittable: {fileID: 114114287249869736}
   Destructable: {fileID: 114655719370980484}
+  ScreenWrapper: {fileID: 114273616818318112}
   FragmentAsteroid: {fileID: 0}
 --- !u!114 &114273616818318112
 MonoBehaviour:

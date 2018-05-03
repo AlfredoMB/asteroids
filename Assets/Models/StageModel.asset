@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: StageModel
   m_EditorClassIdentifier: 
   StartingAsteroidsAmount: 5
-  StartingLivesAmount: 3
+  StartingLivesAmount: 5
   StagePointFor1stSaucerToAppear: 0.5
   StagePointFor2stSaucerToAppear: 0.8
   AsteroidStartingForceIntensity: 5000

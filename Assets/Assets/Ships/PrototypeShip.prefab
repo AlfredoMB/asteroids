@@ -122,6 +122,8 @@ GameObject:
   - component: {fileID: 54829100939433064}
   - component: {fileID: 114214999039458250}
   - component: {fileID: 114358003165487056}
+  - component: {fileID: 114559517805884022}
+  - component: {fileID: 114239705834444522}
   m_Layer: 0
   m_Name: PrototypeShip
   m_TagString: Untagged
@@ -370,10 +372,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 54829100939433064}
+  Destructable: {fileID: 114239705834444522}
+  ScreenWrapper: {fileID: 114358003165487056}
   _mainThruster: {fileID: 114558433839398892}
   _leftThruster: {fileID: 114786351571665772}
   _rightThruster: {fileID: 114014873557957880}
   _gun: {fileID: 114778403385661210}
+--- !u!114 &114239705834444522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950452985488954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e47b2f1b31416e140a0c915cded72a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114358003165487056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -395,6 +410,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b499e78f8ad1d74093d10670d6524a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114559517805884022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1950452985488954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9629fa9070a993440aa1231530ffa2e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114778403385661210
