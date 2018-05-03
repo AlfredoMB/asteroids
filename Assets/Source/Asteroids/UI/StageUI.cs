@@ -9,6 +9,9 @@ public class StageUI : MonoBehaviour
 
     public void Start()
     {
+        OnLivesUpdated(StageStateModel.Lives.Value);
+        OnScoreUpdated(StageStateModel.Score.Value);
+
         StageStateModel.Lives.OnUpdated += OnLivesUpdated;
         StageStateModel.Score.OnUpdated += OnScoreUpdated;
     }

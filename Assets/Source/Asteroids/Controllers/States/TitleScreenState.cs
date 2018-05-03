@@ -3,10 +3,11 @@
 public class TitleScreenState : MonoBehaviour
 {
     public BaseTitleScreenInput Input;
-    public GameObject StartStageState;
-    public BaseFSM FSM;
     public BaseAsteroidsGameController AsteroidsGameController;
 
+    public GameObject StartStageState;
+    public BaseFSM FSM;
+    
     public int StartingAsteroidsAmount = 5;
     public float AsteroidStartingForceIntensity = 100f;
 

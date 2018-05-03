@@ -25,11 +25,6 @@ public class ShipController : MonoBehaviour
         ScreenWrapper.Initialize(camera);
     }
 
-    internal void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner)
-    {
-        throw new NotImplementedException();
-    }
-
     public void OnCollisionEnter(Collision collision)
     {
         if (OnShipDestruction != null)

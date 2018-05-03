@@ -1,4 +1,6 @@
-﻿public class StageStateModel
+﻿using UnityEngine;
+
+public class StageStateModel : MonoBehaviour
 {
     public Observable<int> Lives = new Observable<int>();
     public Observable<int> Score = new Observable<int>();

@@ -7,12 +7,12 @@ public class GameObjectSpawner : BaseGameObjectSpawner
 
     public override GameObject Spawn(GameObject original, Transform parent = null)
     {
-        return Spawn(original, Vector3.zero, Quaternion.identity, transform);
+        return Spawn(original, Vector3.zero, Quaternion.identity, parent);
     }
 
     public override GameObject Spawn(GameObject original, Vector3 position, Transform parent = null)
     {
-        return Spawn(original, position, Quaternion.identity, transform);
+        return Spawn(original, position, Quaternion.identity, parent);
     }
 
     public override GameObject Spawn(GameObject original, Vector3 position, Quaternion rotation, Transform parent = null)

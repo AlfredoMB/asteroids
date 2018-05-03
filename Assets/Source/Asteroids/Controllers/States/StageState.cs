@@ -4,10 +4,13 @@ public class StageState : MonoBehaviour
 {
     public ShipModel ShipModel;
     public StageModel StageModel;
-    public StageStateModel StageStateModel = new StageStateModel();
+    public StageStateModel StageStateModel;
 
     public BaseShipInput ShipInput;
     public BaseAsteroidsGameController AsteroidsGameController;
+
+    public GameObject GameOverState;
+    public BaseFSM FSM;
 
     private ShipController _playerShip;
 
@@ -18,10 +21,19 @@ public class StageState : MonoBehaviour
         AsteroidsGameController.Reset();
         AsteroidsGameController.CreateAsteroidsAroundTheScreen(StageModel.StartingAsteroidsAmount, StageModel.AsteroidStartingForceIntensity);
 
+        CreateShip();
+        AttachShip();
+    }
+
+    private void CreateShip()
+    {
         _playerShip = AsteroidsGameController.CreateShip(ShipModel);
+    }
+
+    private void AttachShip()
+    { 
         _playerShip.OnShipDestruction += OnShipDestruction;
 
-        
         ShipInput.OnStartMainThrusters += _playerShip.StartMainThrusters;
         ShipInput.OnStopMainThrusters += _playerShip.StopMainThrusters;
 
@@ -36,6 +48,13 @@ public class StageState : MonoBehaviour
 
     public void OnDisable()
     {
+        DeattachShip();
+    }
+
+    private void DeattachShip()
+    { 
+        _playerShip.OnShipDestruction -= OnShipDestruction;
+
         ShipInput.OnStartMainThrusters -= _playerShip.StartMainThrusters;
         ShipInput.OnStopMainThrusters -= _playerShip.StopMainThrusters;
 
@@ -50,7 +69,19 @@ public class StageState : MonoBehaviour
 
     private void OnShipDestruction()
     {
+        DeattachShip();
+
         StageStateModel.Lives.Value -= 1;
+
+        if (StageStateModel.Lives.Value > 0)
+        {
+            CreateShip();
+            AttachShip();
+        }
+        else
+        {
+            FSM.ChangeState(GameOverState);
+        }
     }
 
     private void OnAsteroidDestruction()
