@@ -9,6 +9,8 @@ public class ShipInput : BaseShipInput
     private string SideThrustersAxisName = "Horizontal";
     [SerializeField]
     private string FireButton = "Fire";
+    [SerializeField]
+    private string HyperspaceButton = "Jump";
 
     private bool _aremainThrustersOn;
     private bool _areLeftThrustersOn;
@@ -63,6 +65,11 @@ public class ShipInput : BaseShipInput
         if (Input.GetButton(FireButton))
         {
             SafeAction(OnFire);
+        }
+
+        if (Input.GetButtonDown(HyperspaceButton))
+        {
+            SafeAction(OnHyperspaceJump);
         }
     }
 }

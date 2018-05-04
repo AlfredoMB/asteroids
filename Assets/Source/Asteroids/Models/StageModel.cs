@@ -5,8 +5,10 @@ public class StageModel : ScriptableObject
 {
     public int StartingAsteroidsAmount = 5;
     public int NumberOfLevelsToAddAsteroid = 1;
+    public int MaxStartingAsteroids = 10;
     public int StartingLivesAmount = 3;
     public int ScoreToEarnExtraLife = 1000;
     public float StageProgressFor1stSaucerToAppear = 0.5f;
     public float StageProgressFor2ndSaucerToAppear = 0.8f;
+    public float ScoreToSpawnOnlySmallSaucers = 40000;
 }

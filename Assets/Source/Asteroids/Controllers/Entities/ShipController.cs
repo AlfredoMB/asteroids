@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ShipController : MonoBehaviour
 {
@@ -12,11 +14,14 @@ public class ShipController : MonoBehaviour
     public GunController _gun;
 
     private BaseShipInput _shipInput;
+    private BaseCamera _camera;
 
     public event Action<GameObject, GameObject> OnShipDestruction;
 
     public void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner, BaseCamera camera)
     {
+        _camera = camera;
+
         _mainThruster.Initialize(shipModel.MainThrusterStrength, Rigidbody);
         _leftThruster.Initialize(shipModel.SideThrusterStrength, Rigidbody);
         _rightThruster.Initialize(shipModel.SideThrusterStrength, Rigidbody);
@@ -48,8 +53,9 @@ public class ShipController : MonoBehaviour
         shipInput.OnStopRightThrusters += _rightThruster.StopThruster;
 
         shipInput.OnFire += _gun.Fire;
+        shipInput.OnHyperspaceJump += OnHyperspaceJump;
     }
-
+    
     private void OnDisable()
     {
         _mainThruster.StopThruster();
@@ -70,6 +76,7 @@ public class ShipController : MonoBehaviour
         _shipInput.OnStopRightThrusters -= _rightThruster.StopThruster;
 
         _shipInput.OnFire -= _gun.Fire;
+        _shipInput.OnHyperspaceJump -= OnHyperspaceJump;
     }
 
     public void OnCollisionEnter(Collision collision)
@@ -96,5 +103,17 @@ public class ShipController : MonoBehaviour
         transform.SetPositionAndRotation(position, Quaternion.LookRotation(Vector3.forward));
         Rigidbody.velocity = Vector3.zero;
         Rigidbody.angularVelocity = Vector3.zero;
+    }
+
+    private void OnHyperspaceJump()
+    {
+        Respawn(GetRandomPositionInTheScreen());
+    }
+
+    private Vector3 GetRandomPositionInTheScreen()
+    {
+        float z = _camera.transform.position.y;
+        Vector3 randomPosition = new Vector3(Random.Range(0f, 1f), Random.Range(0f, 1f), z);
+        return _camera.ViewportToWorldPoint(randomPosition);
     }
 }

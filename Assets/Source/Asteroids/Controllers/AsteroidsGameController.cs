@@ -103,7 +103,9 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     public override void CreateInitialAsteroids()
     {
-        _initialAsteroidsAmount = StageModel.StartingAsteroidsAmount + (StageStateModel.Level.Value / StageModel.NumberOfLevelsToAddAsteroid);
+        _initialAsteroidsAmount = Math.Min(StageModel.MaxStartingAsteroids, 
+            StageModel.StartingAsteroidsAmount + (StageStateModel.Level.Value / StageModel.NumberOfLevelsToAddAsteroid));
+
         _initialAsteroids.Clear();
         for (int i=0; i < _initialAsteroidsAmount; i++)
         {
@@ -177,7 +179,9 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         // check for saucer 1
         if (stageProgress > StageModel.StageProgressFor1stSaucerToAppear && _saucersSpawnedAmount == 0)
         {
-            CreateSaucer(AssetLibrary.AssetSet.SmallSaucer);
+            CreateSaucer(StageStateModel.Score.Value < StageModel.ScoreToSpawnOnlySmallSaucers
+                ? AssetLibrary.AssetSet.BigSaucer
+                : AssetLibrary.AssetSet.SmallSaucer);
         }
 
         // check for saucer 2

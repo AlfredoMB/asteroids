@@ -10,4 +10,6 @@ public abstract class BaseShipInput : MonoBehaviour
     public Action OnStopLeftThrusters;
     public Action OnStopMainThrusters;
     public Action OnStopRightThrusters;
+
+    public Action OnHyperspaceJump;
 }

@@ -36,8 +36,7 @@ public class SaucerController : MonoBehaviour
     {
         var aimAngle = (Random.value < 0.5f ? 1f : -1f) * 
             Mathf.Max(SaucerModel.StartingAimAngle - SaucerModel.AimAnglePrecisionIncreasePerScorePoint * _score.Value, 0);
-
-        Debug.Log(aimAngle);
+        
         var playerDirection = _playerShip.transform.position - transform.position;
         Gun.transform.rotation = Quaternion.LookRotation(playerDirection) * Quaternion.AngleAxis(aimAngle, Vector3.up);
         Gun.Fire();
