@@ -30,7 +30,6 @@ public class AsteroidsGameController : BaseAsteroidsGameController
     public override void StartLevel()
     {
         Reset();
-        PlayerShip.Respawn(Vector3.zero);
         CreateInitialAsteroids();
     }
 

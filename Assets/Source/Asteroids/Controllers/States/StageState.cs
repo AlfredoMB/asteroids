@@ -4,6 +4,7 @@ using UnityEngine;
 public class StageState : MonoBehaviour
 {
     public float RespawnDelay = 1f;
+    public float NewLevelDelay = 2f;
 
     public BaseShipInput ShipInput;
     public BaseAsteroidsGameController AsteroidsGameController;
@@ -43,6 +44,12 @@ public class StageState : MonoBehaviour
 
     private void OnLevelFinished()
     {
+        StartCoroutine(LevelFinished());
+    }
+
+    private IEnumerator LevelFinished()
+    {
+        yield return new WaitForSeconds(NewLevelDelay);
         AsteroidsGameController.StartLevel();
     }
 
