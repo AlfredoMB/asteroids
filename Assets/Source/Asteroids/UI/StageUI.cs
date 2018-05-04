@@ -7,7 +7,7 @@ public class StageUI : MonoBehaviour
     public TemplateListView LivesView;
     public TextView ScoreView;
 
-    public void Start()
+    public void OnEnable()
     {
         OnLivesUpdated(StageStateModel.Lives.Value);
         OnScoreUpdated(StageStateModel.Score.Value);
@@ -16,13 +16,29 @@ public class StageUI : MonoBehaviour
         StageStateModel.Score.OnUpdated += OnScoreUpdated;
     }
 
+    private void OnDisable()
+    {
+        StageStateModel.Lives.OnUpdated -= OnLivesUpdated;
+        StageStateModel.Score.OnUpdated -= OnScoreUpdated;
+    }
+
     private void OnLivesUpdated(int value)
     {
+        if (LivesView == null)
+        {
+            return;
+        }
+
         LivesView.UpdateValue(value);
     }
 
     private void OnScoreUpdated(int value)
     {
+        if (ScoreView == null)
+        {
+            return;
+        }
+
         ScoreView.UpdateValue(value);
     }
 }
