@@ -17,10 +17,10 @@ public class ShipController : MonoBehaviour
 
     public void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner, BaseCamera camera)
     {
-        _mainThruster.Initialize(shipModel, Rigidbody);
-        _leftThruster.Initialize(shipModel, Rigidbody);
-        _rightThruster.Initialize(shipModel, Rigidbody);
-        _gun.Initialize(shipModel, spawner, camera);
+        _mainThruster.Initialize(shipModel.MainThrusterStrength, Rigidbody);
+        _leftThruster.Initialize(shipModel.SideThrusterStrength, Rigidbody);
+        _rightThruster.Initialize(shipModel.SideThrusterStrength, Rigidbody);
+        _gun.Initialize(shipModel.FireRate, spawner, camera);
         
         ScreenWrapper.Initialize(camera);
     }

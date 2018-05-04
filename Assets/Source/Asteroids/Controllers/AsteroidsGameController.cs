@@ -20,11 +20,15 @@ public class AsteroidsGameController : BaseAsteroidsGameController
     
     private int _initialAsteroidsAmount;
     private int _saucersSpawnedAmount;
+    private int _extraLives;
 
     public override void Initialize()
     {
         StageStateModel.Initialize(StageModel);
         CreateShip(ShipModel);
+        StageStateModel.Score.OnUpdated += OnScoreUpdated;
+
+        _extraLives = 0;
     }
 
     public override void StartLevel()
@@ -35,6 +39,8 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     public override void Reset()
     {
+        _initialAsteroidsAmount = 0;
+        _saucersSpawnedAmount = 0;
         _initialAsteroids.Clear();
         _currentAsteroids.Clear();
         _currentSaucers.Clear();
@@ -78,13 +84,21 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     private IEnumerator Respawn()
     {
-        yield return new WaitUntil(() => IsSafeToRespawn());
-        PlayerShip.Respawn(Vector3.zero);
-    }
+        /*
+        float radius = 4.0F;
+        float power = 100000.0F;
+        Vector3 explosionPos = Vector3.zero;
+        Collider[] colliders = Physics.OverlapSphere(explosionPos, radius);
+        foreach (Collider hit in colliders)
+        {
+            Rigidbody rb = hit.GetComponent<Rigidbody>();
 
-    private bool IsSafeToRespawn()
-    {
-        return true;
+            if (rb != null)
+                rb.AddExplosionForce(power, explosionPos, radius, 3.0F);
+        }
+        */
+        yield return new WaitForSeconds(0.25f);
+        PlayerShip.Respawn(Vector3.zero);
     }
 
     public override void CreateInitialAsteroids()
@@ -99,26 +113,31 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     private AsteroidController CreateAsteroidAroundTheScreen(AsteroidController asteroid)
     {
+        return CreateAsteroid(asteroid, GetRandomPositionAroundTheScreen(), Random.rotation, GetRandomForce());
+    }
+
+    private Vector3 GetRandomPositionAroundTheScreen()
+    {
         float z = Camera.transform.position.y;
         Vector3 randomPosition = (Random.Range(0, 2) == 0)
             ? new Vector3(Random.Range(0f, 1f), Random.Range(0, 2), z)
             : new Vector3(Random.Range(0, 2), Random.Range(0f, 1f), z);
-        var position = Camera.ViewportToWorldPoint(randomPosition);
-
-        return CreateAsteroid(asteroid, position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
+        return Camera.ViewportToWorldPoint(randomPosition);
     }
 
-    private Vector3 GetRandomForce(float intensity)
+    private Vector3 GetRandomForce()
     {
-        return new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f)) * intensity;
+        return new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
     }
 
     private AsteroidController CreateAsteroid(AsteroidController asteroid, Vector3 position, Quaternion rotation, Vector3 asteroidStartingForce)
     {
         var asteroidObject = Spawner.Spawn(asteroid.gameObject, position, Random.rotation);
         var asteroidController = asteroidObject.GetComponent<AsteroidController>();
+
         asteroidController.Initialize(asteroidStartingForce, Spawner, Camera);
         asteroidController.OnDestruction += OnAsteroidDestruction;
+
         _currentAsteroids.Add(asteroidController);
         return asteroidController;
     }
@@ -130,16 +149,20 @@ public class AsteroidsGameController : BaseAsteroidsGameController
 
     public override void DestroyAsteroid(AsteroidController asteroid)
     {
-        StageStateModel.Score.Value += 100;
+        StageStateModel.Score.Value += asteroid.AsteroidModel.DestructionScore;
 
         _currentAsteroids.Remove(asteroid);
+        if (_initialAsteroids.Contains(asteroid))
+        {
+            _initialAsteroids.Remove(asteroid);
+        }
 
         CheckForSaucerSpawn();
 
         if (asteroid.FragmentAsteroid != null)
         {
-            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
-            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce(StageModel.AsteroidStartingForceIntensity));
+            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce());
+            CreateAsteroid(asteroid.FragmentAsteroid, asteroid.transform.position, Random.rotation, GetRandomForce());
         }
         else
         {
@@ -148,16 +171,20 @@ public class AsteroidsGameController : BaseAsteroidsGameController
     }
 
     private void CheckForSaucerSpawn()
-    {/*
+    {
         float stageProgress = 1f - (float)_initialAsteroids.Count / _initialAsteroidsAmount;
 
         // check for saucer 1
-        if (stageProgress > _stageModel.StageProgressFor1stSaucerToAppear)
+        if (stageProgress > StageModel.StageProgressFor1stSaucerToAppear && _saucersSpawnedAmount == 0)
         {
-            CreateSaucerOutsideScreen();
+            CreateSaucer(AssetLibrary.AssetSet.SmallSaucer);
         }
 
-        // check for saucer 2*/
+        // check for saucer 2
+        if (stageProgress > StageModel.StageProgressFor2ndSaucerToAppear && _saucersSpawnedAmount == 1)
+        {
+            CreateSaucer(AssetLibrary.AssetSet.SmallSaucer);
+        }
     }
 
     private void CheckForLevelEnd()
@@ -172,13 +199,38 @@ public class AsteroidsGameController : BaseAsteroidsGameController
         }
     }
 
-    public override SaucerController CreateSaucer(SaucerModel saucer)
+    public override SaucerController CreateSaucer(SaucerController saucer)
     {
-        throw new System.NotImplementedException();
+        var position = GetRandomPositionAroundTheScreen();
+        
+        var saucerObject = Spawner.Spawn(saucer.gameObject, position);
+        var saucerController = saucerObject.GetComponent<SaucerController>();
+
+        saucerController.Initialize(PlayerShip, StageStateModel.Score, Spawner, Camera);
+        saucerController.OnSaucerDestruction += OnSaucerDestruction;
+
+        _currentSaucers.Add(saucerController);
+        _saucersSpawnedAmount++;
+        return saucerController;
+    }
+
+    private void OnSaucerDestruction(GameObject destroyed, GameObject destroyer)
+    {
+        DestroySaucer(destroyed.GetComponent<SaucerController>());
     }
 
     public override void DestroySaucer(SaucerController saucer)
     {
-        throw new System.NotImplementedException();
+        StageStateModel.Score.Value += saucer.SaucerModel.DestructionScore;
+        _currentSaucers.Remove(saucer);
+    }
+
+    private void OnScoreUpdated(int value)
+    {
+        if (value / StageModel.ScoreToEarnExtraLife > _extraLives)
+        {
+            _extraLives++;
+            StageStateModel.Lives.Value++;
+        }
     }
 }

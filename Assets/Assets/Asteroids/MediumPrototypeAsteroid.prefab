@@ -27,8 +27,8 @@ GameObject:
   - component: {fileID: 114273616818318112}
   - component: {fileID: 114114287249869736}
   - component: {fileID: 114655719370980484}
-  m_Layer: 0
-  m_Name: PrototypeAsteroid 1
+  m_Layer: 9
+  m_Name: MediumPrototypeAsteroid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ac263022a6a20e4e804fb0be2020ed4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AsteroidModel: {fileID: 11400000, guid: 408b664c348efd640a2ead9c3cc07855, type: 2}
   Rigidbody: {fileID: 54193506554979634}
   Hittable: {fileID: 114114287249869736}
   Destructable: {fileID: 114655719370980484}

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
 {
+    public AsteroidModel AsteroidModel;
+
     public Rigidbody Rigidbody;
     public Hittable Hittable;
     public Destructable Destructable;
@@ -16,7 +18,7 @@ public class AsteroidController : MonoBehaviour
     { 
         if (asteroidStartingForce != Vector3.zero)
         {
-            Rigidbody.AddForce(asteroidStartingForce);
+            Rigidbody.AddForce(asteroidStartingForce * AsteroidModel.StartSpeed);
         }
 
         Hittable.OnHit += OnHit;

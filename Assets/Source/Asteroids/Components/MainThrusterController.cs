@@ -4,7 +4,7 @@
     {
         if (_isTurnedOn)
         {
-            _rigidBody.AddForce(transform.forward * _shipModel.MainThrusterStrength);
+            _rigidBody.AddForce(transform.forward * _thrusterStrength);
         }
     }
 }

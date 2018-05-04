@@ -2,14 +2,14 @@
 
 public abstract class ThrusterController : MonoBehaviour
 {
-    protected ShipModel _shipModel;
+    protected float _thrusterStrength;
     protected Rigidbody _rigidBody;
 
     protected bool _isTurnedOn;
 
-    public void Initialize(ShipModel shipModel, Rigidbody rigidbody)
+    public void Initialize(float thrusterStrength, Rigidbody rigidbody)
     {
-        _shipModel = shipModel;
+        _thrusterStrength = thrusterStrength;
         _rigidBody = rigidbody;
     }
 

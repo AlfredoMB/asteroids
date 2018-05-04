@@ -15,3 +15,7 @@ MonoBehaviour:
     type: 2}
   ShipPrefab: {fileID: 114214999039458250, guid: abded0a33bc2c384fbb07cbb68035fff,
     type: 2}
+  SmallSaucer: {fileID: 114747619254069432, guid: 5c1b9f6534de15b46b1669542ef30127,
+    type: 2}
+  BigSaucer: {fileID: 114747619254069432, guid: cf4643ad7eac9614790017e260b5da78,
+    type: 2}

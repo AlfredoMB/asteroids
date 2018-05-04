@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33518494558743766}
   - component: {fileID: 65470550399374380}
   - component: {fileID: 23877247404893982}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33545022847563020}
   - component: {fileID: 65961921954363678}
   - component: {fileID: 23272092058392892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4041138594024802}
   - component: {fileID: 114778403385661210}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4180047886239240}
   - component: {fileID: 114786351571665772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LeftThruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4664514003579690}
   - component: {fileID: 114014873557957880}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RightThruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -104,7 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4904801084442084}
   - component: {fileID: 114558433839398892}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MainThruster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 114358003165487056}
   - component: {fileID: 114559517805884022}
   - component: {fileID: 114239705834444522}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PrototypeShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,7 +372,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 54829100939433064}
-  Destructable: {fileID: 114239705834444522}
   ScreenWrapper: {fileID: 114358003165487056}
   _mainThruster: {fileID: 114558433839398892}
   _leftThruster: {fileID: 114786351571665772}

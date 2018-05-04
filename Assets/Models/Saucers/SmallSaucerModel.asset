@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78e971c0277f304482d17e1f576650c, type: 3}
+  m_Name: SmallSaucerModel
+  m_EditorClassIdentifier: 
+  FireRate: 0.5
+  MoveSpeed: 0.8
+  DirectionChangeRate: 2
+  StartingAimAngle: 20
+  AimAnglePrecisionIncreasePerScorePoint: 0.0002
+  DestructionScore: 750

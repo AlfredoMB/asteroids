@@ -3,16 +3,16 @@
 public class GunController : MonoBehaviour
 {
     public ShotController Shot;
-
-    private ShipModel _shipModel;
+    
+    private float _fireRate;
     private BaseGameObjectSpawner _spawner;
     private BaseCamera _camera;
 
     private float _gunCooldownFinishTime;
 
-    public void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner, BaseCamera camera)
+    public void Initialize(float fireRate, BaseGameObjectSpawner spawner, BaseCamera camera)
     {
-        _shipModel = shipModel;
+        _fireRate = fireRate;
         _spawner = spawner;
         _camera = camera;
     }
@@ -23,10 +23,9 @@ public class GunController : MonoBehaviour
         {
             return;
         }
-
-        _gunCooldownFinishTime = Time.time + (1 / _shipModel.FireRate);
+        _gunCooldownFinishTime = Time.time + (1 / _fireRate);
 
         var shot = _spawner.Spawn(Shot.gameObject, transform.position, Quaternion.LookRotation(transform.forward, transform.up));
-        shot.GetComponent<ShotController>().Initialize(_spawner, _camera);        
+        shot.GetComponent<ShotController>().Initialize(_spawner, _camera, gameObject.layer);        
     }
 }

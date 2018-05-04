@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dd2e759dae8354da18361129ae1158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShotModel: {fileID: 11400000, guid: 73a28f0785e44814190fa47e6588d31e, type: 2}
   Rigidbody: {fileID: 54435066772673010}
   Destructable: {fileID: 114363661596687630}
   Expirable: {fileID: 114493815049108566}

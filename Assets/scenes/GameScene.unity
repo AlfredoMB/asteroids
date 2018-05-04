@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4fcd801c7416564ca82bca4640d2ffe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RespawnDelay: 2
+  RespawnDelay: 1.5
   NewLevelDelay: 2
   ShipInput: {fileID: 1619656836}
   AsteroidsGameController: {fileID: 1868233671}

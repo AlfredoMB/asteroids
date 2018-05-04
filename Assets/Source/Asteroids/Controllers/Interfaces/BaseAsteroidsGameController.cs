@@ -19,7 +19,7 @@ public abstract class BaseAsteroidsGameController : MonoBehaviour
     public abstract void CreateInitialAsteroids();
     public abstract void DestroyAsteroid(AsteroidController asteroid);
 
-    public abstract SaucerController CreateSaucer(SaucerModel saucer);
+    public abstract SaucerController CreateSaucer(SaucerController saucer);
     public abstract void DestroySaucer(SaucerController saucer);
 
     public abstract void Reset();
