@@ -156,7 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TitleScreenState: {fileID: 1501607496}
   FSM: {fileID: 1827928912}
-  GameOverDuration: 5
+  GameOverDuration: 4
 --- !u!1 &78848337
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class GameOverState : MonoBehaviour
     public GameObject TitleScreenState;
     public BaseFSM FSM;
 
-    public int GameOverDuration = 5;
+    public int GameOverDuration = 1;
 
     private void OnEnable()
     {
