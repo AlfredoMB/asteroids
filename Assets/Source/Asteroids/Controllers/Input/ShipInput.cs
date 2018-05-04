@@ -72,4 +72,16 @@ public class ShipInput : BaseShipInput
             SafeAction(OnHyperspaceJump);
         }
     }
+
+    private void OnDisable()
+    {
+        OnFire = null;
+        OnStartLeftThrusters = null;
+        OnStartMainThrusters = null;
+        OnStartRightThrusters = null;
+        OnStopLeftThrusters = null;
+        OnStopMainThrusters = null;
+        OnStopRightThrusters = null;
+        OnHyperspaceJump = null;
+    }
 }

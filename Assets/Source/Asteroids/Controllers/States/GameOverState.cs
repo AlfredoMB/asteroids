@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 
 public class GameOverState : MonoBehaviour
 {
@@ -8,7 +8,12 @@ public class GameOverState : MonoBehaviour
 
     public int GameOverDuration = 5;
 
-    private IEnumerator Start()
+    private void OnEnable()
+    {
+        StartCoroutine(WaitToRestart());
+    }
+
+    private IEnumerator WaitToRestart()
     {
         yield return new WaitForSeconds(GameOverDuration);
         FSM.ChangeState(TitleScreenState);

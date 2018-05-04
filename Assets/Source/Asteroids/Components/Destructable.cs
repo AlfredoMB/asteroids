@@ -20,4 +20,9 @@ public class Destructable : MonoBehaviour
         }
         _spawner.Despawn(gameObject);
     }
+
+    private void OnDisable()
+    {
+        OnDestruction = null;
+    }
 }

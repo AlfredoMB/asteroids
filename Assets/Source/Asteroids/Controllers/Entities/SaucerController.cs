@@ -48,6 +48,11 @@ public class SaucerController : MonoBehaviour
         Destructable.ExecuteDestruction(hitter);
     }
 
+    private void OnDisable()
+    {
+        OnSaucerDestruction = null;
+    }
+
     private void Update()
     {
         if (Time.time >= _directionChangeCooldownTime)

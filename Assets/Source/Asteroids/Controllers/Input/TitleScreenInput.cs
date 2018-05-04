@@ -9,4 +9,9 @@ public class TitleScreenInput : BaseTitleScreenInput
             OnStartStage();
         }
     }
+
+    private void OnDisable()
+    {
+        OnStartStage = null;
+    }
 }

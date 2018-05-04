@@ -20,6 +20,8 @@ public class ShipController : MonoBehaviour
 
     public void Initialize(ShipModel shipModel, BaseGameObjectSpawner spawner, BaseCamera camera)
     {
+        OnShipDestruction = null;
+
         _camera = camera;
 
         _mainThruster.Initialize(shipModel.MainThrusterStrength, Rigidbody);

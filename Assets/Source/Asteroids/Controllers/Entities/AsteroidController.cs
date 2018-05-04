@@ -31,4 +31,9 @@ public class AsteroidController : MonoBehaviour
         Destructable.OnDestruction += OnDestruction;
         Destructable.ExecuteDestruction(hitter);
     }
+
+    private void OnDisable()
+    {
+        OnDestruction = null;
+    }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ShotController : MonoBehaviour
 {
@@ -9,8 +8,6 @@ public class ShotController : MonoBehaviour
     public Destructable Destructable;
     public Expirable Expirable;
     public ScreenWrapper ScreenWrapper;
-
-    public event Action OnTargetHit;
 
     public void Initialize(BaseGameObjectSpawner spawner, BaseCamera camera, int layer)
     {
@@ -27,6 +24,11 @@ public class ShotController : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        Expirable.OnExpired -= OnExpired;
+    }
+
     private void OnExpired()
     {
         Destructable.ExecuteDestruction();
@@ -41,10 +43,6 @@ public class ShotController : MonoBehaviour
         }
         hittable.Hit(gameObject);
 
-        if (OnTargetHit != null)
-        {
-            OnTargetHit();
-        }
         Destructable.ExecuteDestruction();
     }
 }

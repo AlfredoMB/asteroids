@@ -14,4 +14,9 @@ public class Hittable : MonoBehaviour
 
         OnHit(hitter);
     }
+
+    private void OnDisable()
+    {
+        OnHit = null;
+    }
 }

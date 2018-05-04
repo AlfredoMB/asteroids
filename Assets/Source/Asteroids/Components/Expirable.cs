@@ -7,14 +7,21 @@ public class Expirable : MonoBehaviour
     public float LifeTime = 5f;
 
     private float _expireTime;
+    private bool _isExpired;
 
-    public void Start()
+    public void OnEnable()
     {
+        _isExpired = false;
         _expireTime = Time.time + LifeTime;
     }
 
     public void Update()
     {
+        if (_isExpired)
+        {
+            return;
+        }
+
         if (Time.time < _expireTime)
         {
             return;
@@ -24,6 +31,6 @@ public class Expirable : MonoBehaviour
         {
             OnExpired();
         }
-        enabled = false;
+        _isExpired = true;
     }
 }
